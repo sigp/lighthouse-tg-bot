@@ -46,10 +46,9 @@ def start(update: Update, context: CallbackContext) -> None:
 
 
 def update(context: CallbackContext) -> None:
-    if "chat_ids" in context.bot_data.keys():
-        chat_ids = context.bot_data['chat_ids']
-        for chat_id in chat_ids:
-            context.bot.send_message(chat_id, "ping")
+    chat_ids = context.bot_data['chat_ids']
+    for chat_id in chat_ids:
+        context.bot.send_message(chat_id, "ping")
 
 
 def subscribe(update: Update, context: CallbackContext) -> None:
@@ -74,15 +73,13 @@ def subscribe(update: Update, context: CallbackContext) -> None:
 
 
 def unsubscribe(update: Update, context: CallbackContext) -> None:
-    if "chat_ids" in context.bot_data.keys():
-        chat_ids = context.bot_data['chat_ids']
-        chat_id = update.message.chat_id
-        if chat_id in chat_ids:
-            update.message.reply_text("You are unsubscribed")
-            chat_ids.remove(update.message.chat_id)
-            return
-
-    update.message.reply_text("You were not subscribed")
+    chat_ids = context.bot_data['chat_ids']
+    chat_id = update.message.chat_id
+    if chat_id in chat_ids:
+        update.message.reply_text("You are unsubscribed")
+        chat_ids.remove(update.message.chat_id)
+    else:
+        update.message.reply_text("You were not subscribed")
 
 
 def main() -> None:
@@ -94,6 +91,9 @@ def main() -> None:
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
+
+    if "chat_ids" not in dispatcher.bot_data.keys():
+        dispatcher.bot_data['chat_ids'] = set()
 
     # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler("start", start))
