@@ -1,0 +1,7 @@
+telegram_token: "" # Add your bot token here.
+bot_password: "" # Add a password here.
+bn_api: http://localhost:5052
+validator_indices:
+  - 0
+  - 42
+  - 1337
