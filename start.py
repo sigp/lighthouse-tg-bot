@@ -43,7 +43,6 @@ POLL_TIME = 30
 EPOCH_LOOKBACK=2
 
 # Testing variables.
-EVERYTHING_OK_ALARM=False  # Set to False for production.
 ONCE_PER_EPOCH=True    # Set to True for production.
 
 
@@ -72,7 +71,7 @@ def message_with_json(message, json_data) -> str:
     )
 
 # Request attestation performance data from the beacon node.
-def get_peformance_data(bn_api, current_epoch, indices):
+def get_performance_data(bn_api, epoch, indices):
     url = "{}/lighthouse/attestation_performance/{}".format(bn_api, epoch)
     r = requests.post(url, json=indices)
     return r.json()
@@ -82,17 +81,26 @@ def process_validator_performance_data(v, epoch) -> [str]:
     messages = []
 
     index = v["validator_index"]
-    if not v["is_optimal"]:
-        messages.append(message_with_json(
-            "🤒 Validator {} suboptimal in epoch {} 🤒".format(index, epoch),
-            v
-        ))
+    best_inclusion = v["best_inclusion"]
+    eligible_to_attest = v["eligible_to_attest"]
+
+    if best_inclusion is None:
+        # Alert if the validator was active but failed to attest.
+        if eligible_to_attest:
+            messages.append("🚨 Validator {} missed an attestation in epoch {}!"
+                           .format(index, epoch))
     else:
-        if EVERYTHING_OK_ALARM:
-            messages.append(message_with_json(
-                "🚀 Validator {} optimal in epoch {} 🚀".format(index, epoch),
-                v
-            ))
+        head_vote = best_inclusion['head_vote']
+        agreeing = int(head_vote['total_votes_agreeing'])
+        disagreeing = int(head_vote['total_votes_disagreeing'])
+        total = agreeing + disagreeing
+        # Alert if the validator produced an attestation for a minority head
+        # vote.
+        if not agreeing * 3 >= total * 2:
+            message = "😕 Validator {} did not  in epoch {} did not form a super\-majority\.".format(index, epoch)
+            message += "\n\n```json\n{}\n```".format(json.dumps(head_vote,
+                                                                indent=1))
+            messages.append(message)
 
     return messages
 
@@ -108,6 +116,8 @@ def process_performance_data(performance_data, epoch, context: CallbackContext) 
             messages.append(
                 "Error processing validator {}: {}".format(index, e)
             )
+            # Note: we're not re-raising the error here. This prevents an error
+            # with one validator preventing progress for all other validators.
 
     return messages
 
