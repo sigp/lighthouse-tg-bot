@@ -37,8 +37,8 @@ The bot is ready. Send it a Telegram message with `/start` to get started.
 
 The current notifications are provided:
 
-- When a validator casts a head-vote which does not align with a
-    super-majority.
+- When a validator casts a head-vote which does not align with the
+    majority-voted head.
 - When a validator is active but fails to have an attestation included.
 
 

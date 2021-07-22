@@ -93,11 +93,10 @@ def process_validator_performance_data(v, epoch) -> [str]:
         head_vote = best_inclusion['head_vote']
         agreeing = int(head_vote['total_votes_agreeing'])
         disagreeing = int(head_vote['total_votes_disagreeing'])
-        total = agreeing + disagreeing
         # Alert if the validator produced an attestation for a minority head
         # vote.
-        if not agreeing * 3 >= total * 2:
-            message = "😕 Validator {} head\-vote in epoch {} did not align with a super\-majority\.".format(index, epoch)
+        if disagreeing > agreeing:
+            message = "😕 Validator {} head\-vote in epoch {}\ was not with the majority.".format(index, epoch)
             message += "\n\n```json\n{}\n```".format(json.dumps(head_vote,
                                                                 indent=1))
             messages.append(message)
