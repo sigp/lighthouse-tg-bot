@@ -5,6 +5,10 @@
 This repository contains a Telegram bot which will send a messages to alert
 users of validator activity.
 
+**Note!** Presently, this only works with the following branch of Lighthouse
+https://github.com/sigp/lighthouse/pull/2416. No other clients are supported at
+this stage.
+
 ## Usage
 
 To create a bot and obtain a `telegram_token`, see the [Telegram Bot Documentation].
