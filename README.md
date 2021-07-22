@@ -1,13 +1,26 @@
 # Lighthouse Validator Performance Telegram Bot
 
-[Telegram Bot Documentation]: https://core.telegram.org/bots
+[timerbot.py]: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/timerbot.py
+[DictPersistence]: https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dictpersistence.html
 
 This repository contains a Telegram bot which will send a messages to alert
 users of validator activity.
 
-**Note!** Presently, this only works with the following branch of Lighthouse
+## Cavets
+
+This project is under-development and **not production-ready**.
+
+Presently, this only works with the following branch of Lighthouse
 https://github.com/sigp/lighthouse/pull/2416. No other clients are supported at
 this stage.
+
+## Features
+
+This bot is based off the [timerbot.py] example and provides:
+
+- A password-protected `/subscribe` method.
+- Persistence between process instantiations via [DictPersistence].
+- Interval-based polling of a Lighthouse Beacon Node.
 
 ## Usage
 
