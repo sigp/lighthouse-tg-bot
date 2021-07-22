@@ -2,6 +2,7 @@
 
 [timerbot.py]: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/timerbot.py
 [DictPersistence]: https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.dictpersistence.html
+[PR #2416]: https://github.com/sigp/lighthouse/pull/2416
 
 This repository contains a Telegram bot which will send a messages to alert
 users of validator activity.
@@ -10,8 +11,7 @@ users of validator activity.
 
 This project is under-development and **not production-ready**.
 
-Presently, this only works with the following branch of Lighthouse
-https://github.com/sigp/lighthouse/pull/2416. No other clients are supported at
+Presently, this only works with Lighhouse on [PR #2416]. No other clients are supported at
 this stage.
 
 ## Features
