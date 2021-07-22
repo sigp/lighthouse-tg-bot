@@ -178,7 +178,7 @@ def subscribe(update: Update, context: CallbackContext) -> None:
 
         # Subscribe chat id, regardless of an existing subscription.
         context.bot_data['chat_ids'].add(update.message.chat_id)
-        update.message.reply_text("You are subscribed")
+        update.message.reply_text("You are subscribed. Use /unsubscribe to stop.")
     except (IndexError, ValueError):
         update.message.reply_text('Usage: /subscribe <password>')
 
