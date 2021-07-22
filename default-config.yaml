@@ -1,6 +1,20 @@
+# This token is provided by Telegram. See:
+#
+# https://core.telegram.org/bots
 telegram_token: "" # Add your bot token here.
+
+# Users will need to provide this password to subscribe to your bot.
+#
+# The password will be displayed in clear-text in messages.
 bot_password: "" # Add a password here.
+
+# Where this script can access a Beacon Node API.
+#
+# Presently only Lighthouse is supported.
 bn_api: http://localhost:5052
+
+# A list of validator indices to monitor. Notifications will be created to all
+# subscribed users for all the indices below.
 validator_indices:
   - 0
   - 42
