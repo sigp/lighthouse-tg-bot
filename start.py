@@ -96,7 +96,7 @@ def process_validator_performance_data(v, epoch) -> [str]:
         # Alert if the validator produced an attestation for a minority head
         # vote.
         if disagreeing > agreeing:
-            message = "😕 Validator {} head\-vote in epoch {}\ was not with the majority.".format(index, epoch)
+            message = "😕 Validator {} head\-vote in epoch {}\ was not with the majority\.".format(index, epoch)
             message += "\n\n```json\n{}\n```".format(json.dumps(head_vote,
                                                                 indent=1))
             messages.append(message)
