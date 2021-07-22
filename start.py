@@ -16,7 +16,6 @@ bot.
 """
 
 import logging
-import os
 import requests
 import json
 import yaml
@@ -214,7 +213,7 @@ def main() -> None:
         dispatcher.bot_data['chat_ids'] = set()
     if "head_epoch" not in dispatcher.bot_data.keys():
         dispatcher.bot_data['head_epoch'] = 0
-    dispatcher.bot_data['bn_api'] = os.environ['BN_API']
+    dispatcher.bot_data['bn_api'] = bn_api
     dispatcher.bot_data['password'] = password
     dispatcher.bot_data['validator_indices'] = validator_indices
 
